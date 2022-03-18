@@ -1,0 +1,21 @@
+# 游戏中手持物品/arathoth addattrtag <文件名>.<节点路径> (example.exampleItem)
+# 条件列表，不满足其中任何一条则该属性节点无法生效
+# 可用约束条件
+# bind - 绑定是否视为加载该属性的条件之一，若视为，非该物品绑定的玩家将不会读取该物品的属性
+# type - 该物品第一行是否含有这段字符串(去掉颜色之后)
+# slot - 物品在玩家背包中的哪个槽位时物品属性生效(槽位id/main)
+# perm - 权限节点约束
+# level - 等级约束，可用符号 > < >= <= =
+# kether - kether脚本条件，自由度极高，任你发挥 (返回值必须为boolean类型)
+rules:
+  - type(主武器)
+  - bind
+  - slot(36, main)
+  - perm(arathoth.exampleItem)
+  - level(>=233)
+  - kether(check player food level >= 10)
+# value 写法由对应属性的开发者决定
+# 在名称重复的情况下 在前面加上(namespace)来特指某属性
+attributes:
+  (arathoth)damage:
+    value: 10

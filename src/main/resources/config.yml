@@ -1,0 +1,60 @@
+#########################
+#     ArathothIII       #
+#     by.ColdRain       #
+#########################
+
+# 数据库设置
+database:
+  host: localhost
+  port: 3306
+  user: root
+  password: root
+  database: test
+  table:
+    correction-player: arathoth_correction_player
+    correction-timed: arathoth_correction_timed
+
+settings:
+  # lore相关功能配置
+  lore:
+    # 是否启用 (不启用可以提升性能)
+    enable: false
+    # 物品绑定Pattern
+    bind:
+      pattern: '[VALUE] ownder'
+      auto-bind:
+        pattern: '%player% ownder'
+        # 启用listener
+        listener:
+          # 捡起
+          pick: true
+          # 容器/背包中点击
+          click: true
+          # 交互
+          interact: true
+  # 状态板设置
+  status:
+    # 展示方案
+    # MESSAGE: 发送消息 (可自定义)
+    # UI: 打开插件TrMenu的指定菜单UI (依赖TrMenu v3)
+    mode: MESSAGE
+    # 玩家打开状态版的命令
+    command: 'statusinfo'
+    # 使用该指令的权限 (不写就没有)
+    perm: ''
+    # TrMenu 菜单名
+    # 如果mode选择了UI，才有必要填写此项
+    ui: ''
+    message:
+      # 是否隐藏值为0的属性
+      # 一旦启用，会隐藏含有这个值为0的属性的一行
+      hideZero: true
+      # 内容，活用papi变量
+      # 高版本支持TabooLib的牛逼颜色代码
+      text:
+        - '&7&l>&m--------&8&l[ &f%player_name% &8&l]&7&l&m--------&7&l<'
+        - '   &7&l> &7物理伤害: &f%arathoth_damage:total%'
+  script:
+    # javaScript Building, 在此注册的静态类/object可以被javascript调用
+    js-building:
+      Bukkit: 'org.bukkit.Bukkit'
