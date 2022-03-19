@@ -27,10 +27,9 @@ object RuleImplLoader : Injector.Classes {
     }
 
     override fun postInject(clazz: Class<*>, instance: Supplier<*>) {
-        if (clazz.isAssignableFrom(RuleImpl::class.java)) {
+        if (clazz.isAnnotationPresent(RuleImpl::class.java) && Rule::class.java.isAssignableFrom(clazz)) {
             val ruleImpl = clazz.getAnnotation(RuleImpl::class.java)
             Rule.registry[ruleImpl.key] = instance.get() as Rule
         }
     }
-
 }

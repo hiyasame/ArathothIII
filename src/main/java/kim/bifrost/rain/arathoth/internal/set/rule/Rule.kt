@@ -27,5 +27,16 @@ interface Rule {
 
     companion object {
         val registry: MutableMap<String, Rule> = mutableMapOf()
+        private val regex = Regex("""(?<rule>\S+)\((?<content>(\s|\S)+)\)""")
+
+        fun judge(str: String, player: Player, slot: Int, item: ItemStack): Boolean {
+            val res = regex.find(str) ?: return true
+            val group = res.groups as MatchNamedGroupCollection
+            val rule = group["rule"]?.value ?: return true
+            val content = group["content"]?.value ?: ""
+            return registry[rule]?.run {
+                judge(player, slot, item, content)
+            } ?: true
+        }
     }
 }

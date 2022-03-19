@@ -21,9 +21,10 @@ settings:
     enable: false
     # 物品绑定Pattern
     bind:
-      pattern: '[VALUE] ownder'
+      pattern: 'Owner: [VALUE]'
       auto-bind:
-        pattern: '%player% ownder'
+        # 在玩家拿到手后会把物品中匹配这个pattern的一行lore中的%player%替换为玩家名
+        pattern: 'Owner: %player%'
         # 启用listener
         listener:
           # 捡起
@@ -34,21 +35,18 @@ settings:
           interact: true
   # 状态板设置
   status:
-    # 展示方案
-    # MESSAGE: 发送消息 (可自定义)
-    # UI: 打开插件TrMenu的指定菜单UI (依赖TrMenu v3)
-    mode: MESSAGE
     # 玩家打开状态版的命令
     command: 'statusinfo'
     # 使用该指令的权限 (不写就没有)
     perm: ''
-    # TrMenu 菜单名
-    # 如果mode选择了UI，才有必要填写此项
-    ui: ''
     message:
       # 是否隐藏值为0的属性
       # 一旦启用，会隐藏含有这个值为0的属性的一行
       hideZero: true
+      # 最小行数, 少于此行数将会执行noStatusAction
+      minLines: 2
+      noStatusAction: |-
+        send color *"&c你没有属性"
       # 内容，活用papi变量
       # 高版本支持TabooLib的牛逼颜色代码
       text:

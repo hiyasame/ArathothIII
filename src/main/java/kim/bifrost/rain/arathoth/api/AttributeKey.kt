@@ -1,6 +1,7 @@
 package kim.bifrost.rain.arathoth.api
 
 import kim.bifrost.rain.arathoth.Arathoth
+import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import kim.bifrost.rain.arathoth.api.handler.AttributeHandler
 import kim.bifrost.rain.arathoth.utils.info
@@ -18,11 +19,11 @@ import java.io.File
  * @author 寒雨
  * @since 2022/3/18 17:04
  **/
-class AttributeKey<T>(
+class AttributeKey<T : AttributeData<T>>(
     val namespace: String,
     val name: String,
     val dataType: AttributeValueType<T>,
-    private val lorePattern: List<String> = listOf(),
+    private val extraParsers: List<ExtraAttributeParser<T>> = listOf(),
     private val initConf: FileConfiguration.() -> Unit,
     private val handlers: List<AttributeHandler>
 ) {
@@ -30,9 +31,7 @@ class AttributeKey<T>(
     // 是否注册
     private var registered: Boolean = false
 
-    // 启用lore
-    val enableLore: Boolean
-        get() = lorePattern.isNotEmpty()
+    val node: String = "$namespace.$name"
 
     // 属性配置
     lateinit var config: FileConfiguration
@@ -68,13 +67,13 @@ class AttributeKey<T>(
         registry.add(this)
     }
 
-    class Builder<T>(val namespace: String, val name: String, private val dataType: AttributeValueType<T>) {
-        private var lorePattern: List<String> = listOf()
+    class Builder<T: AttributeData<T>>(val namespace: String, val name: String, private val dataType: AttributeValueType<T>) {
+        private val extraParsers: MutableList<ExtraAttributeParser<T>> = mutableListOf()
         private var initConf: FileConfiguration.() -> Unit = {}
         private val handlers = mutableListOf<AttributeHandler>()
 
-        fun lorePattern(lorePattern: List<String>): Builder<T> {
-            this.lorePattern = lorePattern
+        fun addExtraAttributeParser(parser: ExtraAttributeParser<T>): Builder<T> {
+            extraParsers.add(parser)
             return this
         }
 
@@ -89,7 +88,7 @@ class AttributeKey<T>(
         }
 
         fun build(): AttributeKey<T> {
-            return AttributeKey(namespace, name, dataType, lorePattern, initConf, handlers)
+            return AttributeKey(namespace, name, dataType, extraParsers, initConf, handlers)
         }
     }
 
@@ -107,12 +106,37 @@ class AttributeKey<T>(
     }
 }
 
-fun <T> createAttribute(namespace: String, name: String, dataType: AttributeValueType<T>, init: AttributeKey.Builder<T>.() -> Unit): AttributeKey<T> {
+/**
+ * 创建自定义数据类型的属性
+ *
+ * @param T
+ * @param namespace
+ * @param name
+ * @param dataType
+ * @param init
+ * @receiver
+ * @return
+ */
+fun <T: AttributeData<T>> createAttribute(namespace: String, name: String, dataType: AttributeValueType<T>, init: AttributeKey.Builder<T>.() -> Unit): AttributeKey<T> {
     val builder = AttributeKey.Builder(namespace, name, dataType)
     builder.init()
     return builder.build()
 }
 
+/**
+ * 创建一个数据类型为数值类型的属性
+ * 会默认加上NBT/Lore的ExtraAttributeParser
+ *
+ * @param namespace
+ * @param name
+ * @param init
+ * @receiver
+ * @return
+ */
 fun createAttribute(namespace: String, name: String, init: AttributeKey.Builder<NumberAttributeData>.() -> Unit): AttributeKey<NumberAttributeData> {
-    return createAttribute(namespace, name, NUMBER, init)
+    val builder = AttributeKey.Builder(namespace, name, NUMBER)
+    builder.init()
+    builder.addExtraAttributeParser(PARSER_NBT)
+    builder.addExtraAttributeParser(PARSER_LORE)
+    return builder.build()
 }

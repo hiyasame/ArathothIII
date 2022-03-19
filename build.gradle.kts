@@ -11,6 +11,8 @@ taboolib {
     install("module-chat")
     install("module-configuration")
     install("module-kether")
+    install("module-nms")
+    install("module-nms-util")
     install("platform-bukkit")
     classifier = null
     version = "6.0.7-44"

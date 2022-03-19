@@ -1,5 +1,6 @@
 package kim.bifrost.rain.arathoth.api
 
+import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.inventory.ItemStack
@@ -13,7 +14,7 @@ import org.bukkit.util.NumberConversions
  * @author 寒雨
  * @since 2022/3/18 17:17
  **/
-interface AttributeValueType<T> {
+interface AttributeValueType<T : AttributeData<T>> {
     /**
      * 解析属性Data
      *
@@ -22,23 +23,11 @@ interface AttributeValueType<T> {
      */
     fun parse(section: ConfigurationSection): T
 
-    /**
-     * 多个属性Data合并
-     *
-     * @param first
-     * @param second
-     * @return
-     */
-    fun append(first: T, second: T): T
-
 }
 
 // 从字符串中判断值类型
 // 并返回一个含有最大/最小值/百分比值的属性Data
 val NUMBER = object : AttributeValueType<NumberAttributeData> {
-    override fun append(first: NumberAttributeData, second: NumberAttributeData): NumberAttributeData {
-        return first.append(second)
-    }
 
     override fun parse(section: ConfigurationSection): NumberAttributeData {
         val content = section.getString("value")!!

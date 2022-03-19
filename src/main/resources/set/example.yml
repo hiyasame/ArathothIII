@@ -1,3 +1,4 @@
+exampleItem:
 # 游戏中手持物品/arathoth addattrtag <文件名>.<节点路径> (example.exampleItem)
 # 条件列表，不满足其中任何一条则该属性节点无法生效
 # 可用约束条件
@@ -7,15 +8,15 @@
 # perm - 权限节点约束
 # level - 等级约束，可用符号 > < >= <= =
 # kether - kether脚本条件，自由度极高，任你发挥 (返回值必须为boolean类型)
-rules:
+  rules:
   - type(主武器)
   - bind
-  - slot(36, main)
+  - slot(36, main, off)
   - perm(arathoth.exampleItem)
   - level(>=233)
   - kether(check player food level >= 10)
-# value 写法由对应属性的开发者决定
-# 在名称重复的情况下 在前面加上(namespace)来特指某属性
-attributes:
-  (arathoth)damage:
-    value: 10
+  # value 写法由对应属性的开发者决定
+  # 在名称重复的情况下 在前面加上(namespace)来特指某属性
+  attributes:
+    (arathoth)damage:
+      value: 10

@@ -1,6 +1,7 @@
 package kim.bifrost.rain.arathoth.api.handler
 
 import kim.bifrost.rain.arathoth.api.AttributeKey
+import kim.bifrost.rain.arathoth.api.data.AttributeData
 import org.bukkit.event.Event
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.service.PlatformExecutor
@@ -31,4 +32,4 @@ class TimerScheduleHandler(
     }
 }
 
-fun AttributeKey.Builder.timer(async: Boolean = false, period: Long, subscriber: () -> Unit) = addHandler(TimerScheduleHandler(async, period, subscriber))
+fun <D: AttributeData<D>> AttributeKey.Builder<D>.timer(async: Boolean = false, period: Long, subscriber: () -> Unit) = addHandler(TimerScheduleHandler(async, period, subscriber))

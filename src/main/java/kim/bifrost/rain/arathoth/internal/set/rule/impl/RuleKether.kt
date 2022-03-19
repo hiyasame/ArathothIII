@@ -1,12 +1,14 @@
-package kim.bifrost.rain.arathoth.internal.set.rule
+package kim.bifrost.rain.arathoth.internal.set.rule.impl
 
+import kim.bifrost.rain.arathoth.internal.set.rule.Rule
+import kim.bifrost.rain.arathoth.internal.set.rule.RuleImpl
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.module.kether.KetherShell
 import taboolib.platform.type.BukkitPlayer
 
 /**
- * kim.bifrost.rain.arathoth.internal.set.rule.RuleKether
+ * kim.bifrost.rain.arathoth.internal.set.rule.impl.RuleKether
  * Arathoth
  *
  * @author 寒雨

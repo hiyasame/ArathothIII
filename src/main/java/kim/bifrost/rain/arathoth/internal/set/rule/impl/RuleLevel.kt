@@ -1,11 +1,13 @@
-package kim.bifrost.rain.arathoth.internal.set.rule
+package kim.bifrost.rain.arathoth.internal.set.rule.impl
 
+import kim.bifrost.rain.arathoth.internal.set.rule.Rule
+import kim.bifrost.rain.arathoth.internal.set.rule.RuleImpl
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.util.NumberConversions
 
 /**
- * kim.bifrost.rain.arathoth.internal.set.rule.RuleLevel
+ * kim.bifrost.rain.arathoth.internal.set.rule.impl.RuleLevel
  * Arathoth
  *
  * @author 寒雨

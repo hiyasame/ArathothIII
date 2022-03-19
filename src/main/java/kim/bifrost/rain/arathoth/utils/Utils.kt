@@ -4,10 +4,12 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
+import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.function.console
 import taboolib.module.chat.colored
 import java.io.File
 import java.util.function.Consumer
+import java.util.regex.Pattern
 
 /**
  * kim.bifrost.rain.arathoth.utils.Utils
@@ -43,3 +45,22 @@ fun CommandSender.info(message: String) {
 fun CommandSender.error(message: String) {
     sendMessage("&c&l[&4&lArathoth&c&l] &c$message".colored())
 }
+
+fun String.asRegexPattern(): Pattern {
+    return Pattern.compile(
+        this.replace("[VALUE]", "(?<value>\\S+)")
+            .replace("[NUMBER]", "(?<number>\\d+)")
+    )
+}
+
+val ItemStack.lore: List<String>
+    get() {
+        val lore = mutableListOf<String>()
+        val meta = itemMeta
+        if (meta != null) {
+            if (meta.hasLore()) {
+                lore.addAll(meta.lore!!)
+            }
+        }
+        return lore
+    }
