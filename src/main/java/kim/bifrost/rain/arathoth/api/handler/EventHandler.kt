@@ -2,6 +2,7 @@ package kim.bifrost.rain.arathoth.api.handler
 
 import kim.bifrost.rain.arathoth.api.AttributeKey
 import kim.bifrost.rain.arathoth.api.data.AttributeData
+import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import kim.bifrost.rain.arathoth.utils.Events
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
@@ -31,8 +32,15 @@ class EventHandler<T : Event>(
     }
 }
 
-inline fun <reified T: Event, D: AttributeData<D>> AttributeKey.Builder<D>.event(
+inline fun <reified T: Event, D: AttributeData> AttributeKey.Builder<D>.event(
     priority: EventPriority = EventPriority.NORMAL,
     ignoredCancelled: Boolean = false,
     noinline subscriber: T.() -> Unit
 ) = addHandler(EventHandler(priority, ignoredCancelled, subscriber, T::class.java))
+
+fun <T: Event, D: AttributeData> AttributeKey.Builder<D>.event(
+    eventClazz: Class<T>,
+    priority: EventPriority = EventPriority.NORMAL,
+    ignoredCancelled: Boolean = false,
+    subscriber: T.() -> Unit
+) = addHandler(EventHandler(priority, ignoredCancelled, subscriber, eventClazz))

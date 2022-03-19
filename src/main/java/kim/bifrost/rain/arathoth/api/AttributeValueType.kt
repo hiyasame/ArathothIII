@@ -14,7 +14,7 @@ import org.bukkit.util.NumberConversions
  * @author 寒雨
  * @since 2022/3/18 17:17
  **/
-interface AttributeValueType<T : AttributeData<T>> {
+interface AttributeValueType<T : AttributeData> {
     /**
      * 解析属性Data
      *

@@ -1,5 +1,6 @@
 package kim.bifrost.rain.arathoth.api
 
+import kim.bifrost.rain.arathoth.internal.EntityStatusManager
 import org.bukkit.entity.Entity
 import org.bukkit.event.entity.EntityShootBowEvent
 
@@ -16,19 +17,19 @@ interface LoadStatusParams<T: Entity> {
 
     object LivingEntity : LoadStatusParams<org.bukkit.entity.LivingEntity> {
         override fun load(entity: org.bukkit.entity.LivingEntity) {
-            TODO("Not yet implemented")
+            EntityStatusManager.load(entity, EntityStatusManager.read(entity))
         }
     }
 
     object Player : LoadStatusParams<org.bukkit.entity.Player> {
         override fun load(entity: org.bukkit.entity.Player) {
-            TODO("Not yet implemented")
+            EntityStatusManager.load(entity, EntityStatusManager.read(entity))
         }
     }
 
     class Arrow(private val event: EntityShootBowEvent) : LoadStatusParams<org.bukkit.entity.Arrow> {
         override fun load(entity: org.bukkit.entity.Arrow) {
-            TODO("Not yet implemented")
+            EntityStatusManager.load(entity, EntityStatusManager.read(event.entity))
         }
     }
 }

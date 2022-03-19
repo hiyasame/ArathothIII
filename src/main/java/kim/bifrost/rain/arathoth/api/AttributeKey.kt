@@ -19,11 +19,11 @@ import java.io.File
  * @author 寒雨
  * @since 2022/3/18 17:04
  **/
-class AttributeKey<T : AttributeData<T>>(
+class AttributeKey<T: AttributeData>(
     val namespace: String,
     val name: String,
     val dataType: AttributeValueType<T>,
-    private val extraParsers: List<ExtraAttributeParser<T>> = listOf(),
+    val extraParsers: List<ExtraAttributeParser<T>> = listOf(),
     private val initConf: FileConfiguration.() -> Unit,
     private val handlers: List<AttributeHandler>
 ) {
@@ -62,12 +62,13 @@ class AttributeKey<T : AttributeData<T>>(
      */
     fun register() {
         if (registered) return
+        handlers.forEach { it.register() }
         registered = true
         loadConf()
         registry.add(this)
     }
 
-    class Builder<T: AttributeData<T>>(val namespace: String, val name: String, private val dataType: AttributeValueType<T>) {
+    class Builder<T: AttributeData>(val namespace: String, val name: String, private val dataType: AttributeValueType<T>) {
         private val extraParsers: MutableList<ExtraAttributeParser<T>> = mutableListOf()
         private var initConf: FileConfiguration.() -> Unit = {}
         private val handlers = mutableListOf<AttributeHandler>()
@@ -93,7 +94,7 @@ class AttributeKey<T : AttributeData<T>>(
     }
 
     companion object {
-        private val registry = mutableSetOf<AttributeKey<*>>()
+        val registry = mutableSetOf<AttributeKey<*>>()
 
         fun reloadAll() {
             registry.forEach { it.loadConf() }
@@ -117,7 +118,7 @@ class AttributeKey<T : AttributeData<T>>(
  * @receiver
  * @return
  */
-fun <T: AttributeData<T>> createAttribute(namespace: String, name: String, dataType: AttributeValueType<T>, init: AttributeKey.Builder<T>.() -> Unit): AttributeKey<T> {
+fun <T: AttributeData> createAttribute(namespace: String, name: String, dataType: AttributeValueType<T>, init: AttributeKey.Builder<T>.() -> Unit): AttributeKey<T> {
     val builder = AttributeKey.Builder(namespace, name, dataType)
     builder.init()
     return builder.build()

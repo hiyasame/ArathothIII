@@ -2,11 +2,13 @@ package kim.bifrost.rain.arathoth.utils
 
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.function.console
 import taboolib.module.chat.colored
+import taboolib.platform.util.isNotAir
 import java.io.File
 import java.util.function.Consumer
 import java.util.regex.Pattern
@@ -51,6 +53,19 @@ fun String.asRegexPattern(): Pattern {
         this.replace("[VALUE]", "(?<value>\\S+)")
             .replace("[NUMBER]", "(?<number>\\d+)")
     )
+}
+
+fun LivingEntity.getEntityItems(): List<ItemStack> {
+    val equip = equipment ?: return emptyList()
+    return buildList {
+        addAll(equip.armorContents.filter { it.isNotAir() })
+        if (equip.itemInMainHand.isNotAir()) add(equip.itemInMainHand)
+        if (equip.itemInOffHand.isNotAir()) add(equip.itemInOffHand)
+    }
+}
+
+fun <T> buildList(block: MutableList<T>.() -> Unit): List<T> {
+    return mutableListOf<T>().apply(block)
 }
 
 val ItemStack.lore: List<String>

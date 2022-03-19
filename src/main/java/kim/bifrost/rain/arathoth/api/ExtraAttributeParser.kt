@@ -1,5 +1,6 @@
 package kim.bifrost.rain.arathoth.api
 
+import kim.bifrost.rain.arathoth.Arathoth
 import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import kim.bifrost.rain.arathoth.utils.lore
@@ -15,7 +16,7 @@ import taboolib.module.nms.getItemTag
  * @author 寒雨
  * @since 2022/3/19 0:59
  **/
-interface ExtraAttributeParser<T: AttributeData<T>> {
+interface ExtraAttributeParser<T: AttributeData> {
     fun parse(key: AttributeKey<T>, item: ItemStack): T
 }
 
@@ -27,6 +28,7 @@ val PARSER_LORE = object : ExtraAttributeParser<NumberAttributeData> {
     private val percentRegex = "(?<percent>[-+]?\\d+(?:\\.\\d+)?)%"
 
     override fun parse(key: AttributeKey<NumberAttributeData>, item: ItemStack): NumberAttributeData {
+        if (!Arathoth.enableLore) return NumberAttributeData(listOf(0.0, 0.0), 0.0)
         val conf = key.config
         if (!regexMap.containsKey(key.node) || !percentRegexMap.containsKey(key.node)) {
             val regex = conf.getStringList("lore").map { it.replace("[VALUE]", regex).toRegex() }

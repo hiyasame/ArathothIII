@@ -10,7 +10,8 @@ import kim.bifrost.rain.arathoth.api.data.AttributeData
  * @since 2022/3/19 1:13
  **/
 class AttributeSet(
-    val data: Map<String, AttributeData<*>>
+    val data: Map<String, AttributeData>,
+    val rules: List<String>
 ) {
 
     companion object {
