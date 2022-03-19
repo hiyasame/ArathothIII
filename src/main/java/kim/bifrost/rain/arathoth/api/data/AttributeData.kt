@@ -7,6 +7,6 @@ package kim.bifrost.rain.arathoth.api.data
  * @author 寒雨
  * @since 2022/3/19 15:19
  **/
-interface AttributeData<T> {
-    fun append(data: T): AttributeData<T>
+interface AttributeData {
+    fun append(data: AttributeData): AttributeData
 }

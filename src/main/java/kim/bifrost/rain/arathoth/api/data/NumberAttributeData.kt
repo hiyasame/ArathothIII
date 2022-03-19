@@ -10,8 +10,9 @@ package kim.bifrost.rain.arathoth.api.data
 data class NumberAttributeData(
     val range: List<Double>,
     val percent: Double
-) : AttributeData<NumberAttributeData> {
-    override fun append(data: NumberAttributeData): NumberAttributeData {
+) : AttributeData {
+    override fun append(data: AttributeData): AttributeData {
+        data as NumberAttributeData
         return NumberAttributeData(
             range.mapIndexed { index, d -> d + data.range[index] },
             percent + data.percent

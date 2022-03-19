@@ -1,5 +1,6 @@
 package kim.bifrost.rain.arathoth.api
 
+import kim.bifrost.rain.arathoth.internal.ArathothAPIImpl
 import org.bukkit.entity.Entity
 
 /**
@@ -12,10 +13,13 @@ import org.bukkit.entity.Entity
 interface ArathothAPI {
     /**
      * 读取实体属性，根据不同类型实体有不同的读取策略
+     * 可以在某些时机调用以达到自定义属性读取时机的效果
      *
      * @param T
      * @param params 读取策略
      * @param entity 实体
      */
     fun <T: Entity> loadStatus(params: LoadStatusParams<T>, entity: T)
+
+    companion object : ArathothAPI by ArathothAPIImpl
 }
