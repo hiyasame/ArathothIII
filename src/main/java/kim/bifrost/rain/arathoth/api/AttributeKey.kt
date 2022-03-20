@@ -73,6 +73,13 @@ class AttributeKey<T: AttributeData>(
         private var initConf: FileConfiguration.() -> Unit = {}
         private val handlers = mutableListOf<AttributeHandler>()
 
+        /**
+         * 在创建属性的dsl中获取属性配置的手段
+         * 不是在回调中调用会抛出异常
+         */
+        val config: FileConfiguration
+            get() = registry.first { it.node == "$namespace.$name" }.config
+
         fun addExtraAttributeParser(parser: ExtraAttributeParser<T>): Builder<T> {
             extraParsers.add(parser)
             return this

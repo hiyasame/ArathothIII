@@ -1,6 +1,5 @@
 package kim.bifrost.rain.arathoth.utils
 
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event

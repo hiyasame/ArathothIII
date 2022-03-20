@@ -1,5 +1,5 @@
 exampleItem:
-# 游戏中手持物品/arathoth addattrtag <文件名>.<节点路径> (example.exampleItem)
+# 游戏中手持物品/arathoth attach <文件名>.<节点路径> (example.exampleItem)
 # 条件列表，不满足其中任何一条则该属性节点无法生效
 # 可用约束条件
 # bind - 绑定是否视为加载该属性的条件之一，若视为，非该物品绑定的玩家将不会读取该物品的属性

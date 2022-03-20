@@ -7,7 +7,7 @@ import taboolib.common.platform.function.submit
 import taboolib.common.platform.service.PlatformExecutor
 
 /**
- * kim.bifrost.rain.arathoth.api.handler.TimerScheuleHandler
+ * kim.bifrost.rain.arathoth.api.handler.TimerScheduleHandler
  * Arathoth
  *
  * @author 寒雨
@@ -32,4 +32,4 @@ class TimerScheduleHandler(
     }
 }
 
-fun <D: AttributeData<D>> AttributeKey.Builder<D>.timer(async: Boolean = false, period: Long, subscriber: () -> Unit) = addHandler(TimerScheduleHandler(async, period, subscriber))
+fun <D: AttributeData> AttributeKey.Builder<D>.timer(async: Boolean = false, period: Long, subscriber: () -> Unit) = addHandler(TimerScheduleHandler(async, period, subscriber))

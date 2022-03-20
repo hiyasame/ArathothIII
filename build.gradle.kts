@@ -14,6 +14,7 @@ taboolib {
     install("module-nms")
     install("module-nms-util")
     install("platform-bukkit")
+    install("expansion-command-helper")
     classifier = null
     version = "6.0.7-44"
 }
