@@ -9,6 +9,8 @@ import kim.bifrost.rain.arathoth.internal.set.rule.Rule
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import taboolib.module.nms.ItemTagData
+import taboolib.module.nms.ItemTagList
 import taboolib.module.nms.getItemTag
 
 /**
@@ -23,25 +25,28 @@ object ItemStatusManager {
     val ItemStack.hasItemNode: Boolean
         get() = getItemTag().getDeep("Arathoth.attrNode") != null
 
-    val ItemStack.itemNode: String?
-        get() = getItemTag().getDeep("Arathoth.attrNode")?.asString()
-
-    fun ItemStack.setItemNode(node: String) {
-        getItemTag().apply {
-            putDeep("Arathoth.attrNode", node)
-            saveTo(this@setItemNode)
+    var ItemStack.itemNodes: List<String>
+        get() = getItemTag().getDeep("Arathoth.attrNode")?.asList()?.map { it.asString() } ?: listOf()
+        set(value) {
+            val tag = getItemTag()
+            val list = ItemTagList()
+            value.forEach { list.add(ItemTagData(it)) }
+            tag["Arathoth.attrNode"] = list
+            tag.saveTo(this)
         }
-    }
 
     @Suppress("UNCHECKED_CAST")
     fun ItemStack.readAttribute(entity: Entity): MutableMap<String, AttributeData> {
-        val set = AttributeSet.registry[itemNode] ?: return mutableMapOf()
-        // 条件不通过, 不读取该物品属性
-        if (
-            entity is Player
-            && !set.rules.all { Rule.judge(it, entity, entity.inventory.indexOf(this), this) }
-        ) return mutableMapOf()
-        val map = set.data.toMutableMap()
+        val map = mutableMapOf<String, AttributeData>()
+        itemNodes.forEach { itemNode ->
+            val set = AttributeSet.registry[itemNode] ?: return mutableMapOf()
+            // 条件不通过, 不读取该物品属性
+            if (
+                entity is Player
+                && !set.rules.all { Rule.judge(it, entity, entity.inventory.indexOf(this), this) }
+            ) return mutableMapOf()
+            map.putAll(set.data)
+        }
         AttributeKey.registry.forEach {
             it.extraParsers.forEach { parser ->
                 val data = (parser as ExtraAttributeParser<AttributeData>).parse(it as AttributeKey<AttributeData>, this)

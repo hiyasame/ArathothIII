@@ -5,19 +5,30 @@
 
 # 数据库设置
 database:
+  # MYSQL/SQLITE
+  type: SQLITE
+  # MYSQL Only
   host: localhost
+  # MYSQL Only
   port: 3306
+  # MYSQL Only
   user: root
+  # MYSQL Only
   password: root
+  # MYSQL Only
   database: test
   table:
-    correction-player: arathoth_correction_player
-    correction-timed: arathoth_correction_timed
+    correction: arathoth_correction
 
 settings:
+  # 弓箭相关属性设置
+  bow:
+    # 只允许弓箭造成的伤害，不建议关闭
+    # 关闭后用弓撸人也会有伤害
+    cancel-entity-attack: true
   # lore相关功能配置
   lore:
-    # 是否启用 (不启用可以提升性能)
+    # 是否启用
     enable: false
     # 物品绑定Pattern
     bind:
@@ -42,16 +53,16 @@ settings:
     message:
       # 是否隐藏值为0的属性
       # 一旦启用，会隐藏含有这个值为0的属性的一行
-      hideZero: true
-      # 最小行数, 少于此行数将会执行noStatusAction
-      minLines: 2
-      noStatusAction: |-
+      hide-zero: true
+      # 最小行数, 少于此行数将会执行no-status-action
+      min-lines: 2
+      no-status-action: |-
         send color *"&c你没有属性"
       # 内容，活用papi变量
       # 高版本支持TabooLib的牛逼颜色代码
       text:
         - '&7&l>&m--------&8&l[ &f%player_name% &8&l]&7&l&m--------&7&l<'
-        - '   &7&l> &7物理伤害: &f%arathoth_damage:total%'
+        - '   &7&l> &7物理伤害: &f%arathoth_damage:range%'
   script:
     # javaScript Building, 在此注册的静态类/object可以被javascript调用
     js-building:

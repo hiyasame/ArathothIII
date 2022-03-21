@@ -4,6 +4,7 @@ import kim.bifrost.rain.arathoth.Arathoth
 import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import kim.bifrost.rain.arathoth.utils.lore
+import org.bukkit.ChatColor
 import org.bukkit.inventory.ItemStack
 import taboolib.module.nms.getItemTag
 
@@ -17,6 +18,9 @@ import taboolib.module.nms.getItemTag
  * @since 2022/3/19 0:59
  **/
 interface ExtraAttributeParser<T: AttributeData> {
+
+    val name: String
+
     fun parse(key: AttributeKey<T>, item: ItemStack): T
 }
 
@@ -38,7 +42,7 @@ val PARSER_LORE = object : ExtraAttributeParser<NumberAttributeData> {
         }
         val regex = regexMap[key.node]!!
         val percentRegex = percentRegexMap[key.node]!!
-        val lore = item.lore
+        val lore = item.lore.map { ChatColor.stripColor(it)!! }
         var min = 0.0
         var max = 0.0
         var percent = 0.0
@@ -62,6 +66,9 @@ val PARSER_LORE = object : ExtraAttributeParser<NumberAttributeData> {
         }
         return NumberAttributeData(listOf(min, max).sorted(), percent)
     }
+
+    override val name: String
+        get() = "LORE_PARSER"
 }
 
 val PARSER_NBT = object : ExtraAttributeParser<NumberAttributeData> {
@@ -75,4 +82,7 @@ val PARSER_NBT = object : ExtraAttributeParser<NumberAttributeData> {
         }
         return NumberAttributeData(listOf(0.0, 0.0), 0.0)
     }
+
+    override val name: String
+        get() = "NBT_PARSER"
 }

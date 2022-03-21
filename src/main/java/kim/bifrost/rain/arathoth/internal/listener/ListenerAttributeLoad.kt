@@ -51,8 +51,10 @@ object ListenerAttributeLoad {
         }
         // 怪物属性加载
         subscribe<EntitySpawnEvent> {
-            if (entity is LivingEntity) {
-                ArathothAPI.loadStatus(LoadStatusParams.LivingEntity, entity as LivingEntity)
+            submit(async = true) {
+                if (entity is LivingEntity) {
+                    ArathothAPI.loadStatus(LoadStatusParams.LivingEntity, entity as LivingEntity)
+                }
             }
         }
 //        subscribe<PlayerInteractEntityEvent> {
@@ -62,8 +64,10 @@ object ListenerAttributeLoad {
 //        }
         // 弓箭属性加载
         subscribe<EntityShootBowEvent> {
-            if (projectile is Arrow) {
-                ArathothAPI.loadStatus(LoadStatusParams.Arrow(this), projectile as Arrow)
+            submit(async = true) {
+                if (projectile is Arrow) {
+                    ArathothAPI.loadStatus(LoadStatusParams.Arrow(this@subscribe), projectile as Arrow)
+                }
             }
         }
     }

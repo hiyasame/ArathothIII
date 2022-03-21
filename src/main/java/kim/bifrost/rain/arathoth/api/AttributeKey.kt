@@ -148,3 +148,19 @@ fun createAttribute(namespace: String, name: String, init: AttributeKey.Builder<
     builder.addExtraAttributeParser(PARSER_LORE)
     return builder.build()
 }
+
+/**
+ * 通过字符串获取AttributeKey
+ *
+ * @param s
+ * @return
+ */
+fun parseAttributeKey(s: String): AttributeKey<*>? {
+    var key = AttributeKey.registry.find { it.name == s }
+    if (s.startsWith("(")) {
+        val namespace = s.substring(s.indexOf("("), s.indexOf(")"))
+        val name = s.substring(s.indexOf(")") + 1)
+        key = AttributeKey.registry.find { it.namespace == namespace && it.name == name }
+    }
+    return key
+}

@@ -13,6 +13,7 @@ taboolib {
     install("module-kether")
     install("module-nms")
     install("module-nms-util")
+    install("module-database")
     install("platform-bukkit")
     install("expansion-command-helper")
     classifier = null
@@ -24,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly("com.google.code.gson:gson:2.9.0")
     compileOnly("ink.ptms:nms-all:1.0.0")
     compileOnly("ink.ptms.core:v11800:11800-minimize:api")
     compileOnly("ink.ptms.core:v11800:11800-minimize:mapped")
