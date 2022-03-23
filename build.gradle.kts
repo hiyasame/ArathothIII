@@ -16,6 +16,8 @@ taboolib {
     install("module-database")
     install("platform-bukkit")
     install("expansion-command-helper")
+    // 编译api
+    options("skip-kotlin-relocate", "skip-env")
     classifier = null
     version = "6.0.7-44"
 }
@@ -31,6 +33,7 @@ dependencies {
     compileOnly("ink.ptms.core:v11800:11800-minimize:mapped")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
+    implementation(kotlin("reflect"))
 }
 
 tasks.withType<JavaCompile> {

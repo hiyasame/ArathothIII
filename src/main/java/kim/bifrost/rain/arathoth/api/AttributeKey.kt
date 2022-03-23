@@ -28,10 +28,14 @@ class AttributeKey<T: AttributeData>(
     private val handlers: List<AttributeHandler>
 ) {
 
+    // 是否启用
+    val enable: Boolean
+        get() = config.getBoolean("enable", true)
+
     // 是否注册
     private var registered: Boolean = false
 
-    val node: String = "$namespace.$name"
+    val node: String = "$namespace:$name"
 
     // 属性配置
     lateinit var config: FileConfiguration
@@ -62,15 +66,20 @@ class AttributeKey<T: AttributeData>(
      */
     fun register() {
         if (registered) return
+        loadConf()
+        if (!enable) {
+            return
+        }
         handlers.forEach { it.register() }
         registered = true
-        loadConf()
         registry.add(this)
     }
 
     class Builder<T: AttributeData>(val namespace: String, val name: String, private val dataType: AttributeValueType<T>) {
         private val extraParsers: MutableList<ExtraAttributeParser<T>> = mutableListOf()
-        private var initConf: FileConfiguration.() -> Unit = {}
+        private var initConf: FileConfiguration.() -> Unit = {
+            set("enable", true)
+        }
         private val handlers = mutableListOf<AttributeHandler>()
 
         /**
@@ -86,7 +95,9 @@ class AttributeKey<T: AttributeData>(
         }
 
         fun config(initConf: FileConfiguration.() -> Unit): Builder<T> {
-            this.initConf = initConf
+            this.initConf = {
+                initConf()
+            }
             return this
         }
 
@@ -110,6 +121,10 @@ class AttributeKey<T: AttributeData>(
         @Awake(LifeCycle.ACTIVE)
         fun countRegistered()  {
             info("成功注册属性: &f${registry.size} &7个")
+        }
+
+        fun findByNode(node: String): AttributeKey<*>? {
+            return registry.firstOrNull { it.node == node }
         }
     }
 }

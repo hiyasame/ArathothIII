@@ -1,5 +1,6 @@
 package kim.bifrost.rain.arathoth.utils
 
+import kim.bifrost.rain.arathoth.api.data.AttributeData
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
@@ -38,7 +39,7 @@ fun info(message: String) {
     console().sendMessage("&7&l[&f&lArathoth&7&l] &7$message".colored())
 }
 
-fun error(message: String) {
+fun warn(message: String) {
     console().sendMessage("&c&l[&4&lArathoth&c&l] &c$message".colored())
 }
 
@@ -95,6 +96,12 @@ fun parseTimeStr(str: String): Long {
         )
     }
     return time
+}
+
+fun MutableMap<String, AttributeData>.combine(data: Map<String, AttributeData>) {
+    data.forEach {
+        this[it.key] = it.value + this[it.key]
+    }
 }
 
 fun Date.format(): String {

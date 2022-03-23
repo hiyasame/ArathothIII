@@ -1,10 +1,11 @@
 package kim.bifrost.rain.arathoth
 
-import kim.bifrost.rain.arathoth.api.AttributeKey
 import kim.bifrost.rain.arathoth.internal.database.Database
 import kim.bifrost.rain.arathoth.internal.database.impl.DatabaseMySQL
 import kim.bifrost.rain.arathoth.internal.database.impl.DatabaseSQLite
 import kim.bifrost.rain.arathoth.internal.set.AttributeSet
+import taboolib.common.env.RuntimeDependencies
+import taboolib.common.env.RuntimeDependency
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.info
 import taboolib.module.configuration.Config
@@ -12,6 +13,9 @@ import taboolib.module.configuration.Configuration
 import taboolib.platform.BukkitPlugin
 import taboolib.platform.type.BukkitPlayer
 
+@RuntimeDependencies(
+    RuntimeDependency(value = "org.jetbrains.kotlin:kotlin-reflect:1.5.10")
+)
 object Arathoth : Plugin() {
 
     val plugin by lazy { BukkitPlugin.getInstance() }

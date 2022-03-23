@@ -9,4 +9,9 @@ package kim.bifrost.rain.arathoth.api.data
  **/
 interface AttributeData {
     fun append(data: AttributeData): AttributeData
+
+    operator fun plus(data: AttributeData?): AttributeData {
+        if (data == null) return this
+        return append(data)
+    }
 }
