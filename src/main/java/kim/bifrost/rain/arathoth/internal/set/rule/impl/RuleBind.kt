@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack
 object RuleBind : Rule {
 
     private val bindPattern by lazy {
-        Arathoth.conf.getString("settings.lore.bind.pattern")!!.asRegexPattern()
+        Arathoth.conf.getString("settings.lore.bind.pattern", "Owner: [VALUE]")!!.asRegexPattern()
     }
 
     override fun judge(player: Player, slot: Int, item: ItemStack, content: String): Boolean {

@@ -1,6 +1,7 @@
 package kim.bifrost.rain.arathoth.utils
 
 import kim.bifrost.rain.arathoth.api.data.AttributeData
+import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
@@ -106,6 +107,10 @@ fun MutableMap<String, AttributeData>.combine(data: Map<String, AttributeData>) 
 
 fun Date.format(): String {
     return format.format(this)
+}
+
+fun String.stripColor(): String {
+    return ChatColor.stripColor(this).orEmpty()
 }
 
 val ItemStack.lore: List<String>
