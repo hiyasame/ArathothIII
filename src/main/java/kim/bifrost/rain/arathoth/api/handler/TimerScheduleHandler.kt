@@ -2,7 +2,6 @@ package kim.bifrost.rain.arathoth.api.handler
 
 import kim.bifrost.rain.arathoth.api.AttributeKey
 import kim.bifrost.rain.arathoth.api.data.AttributeData
-import org.bukkit.event.Event
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.service.PlatformExecutor
 

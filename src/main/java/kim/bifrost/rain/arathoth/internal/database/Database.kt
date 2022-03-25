@@ -1,8 +1,7 @@
 package kim.bifrost.rain.arathoth.internal.database
 
 import kim.bifrost.rain.arathoth.Arathoth
-import kim.bifrost.rain.arathoth.internal.database.impl.DatabaseMySQL
-import kim.bifrost.rain.arathoth.internal.database.impl.DatabaseSQLite
+import taboolib.common.platform.Schedule
 
 /**
  * kim.bifrost.rain.arathoth.internal.database.Database
@@ -39,7 +38,27 @@ interface Database {
      */
     fun remove(id: Int)
 
-    companion object : Database by Arathoth.database {
+    companion object : Database {
 
+        @Schedule(async = true, delay = 40)
+        internal fun timerTask() {
+            removeExpired()
+        }
+
+        override fun insert(data: Correction) {
+            Arathoth.database.insert(data)
+        }
+
+        override fun query(player: String): List<Correction> {
+            return Arathoth.database.query(player)
+        }
+
+        override fun removeExpired() {
+            Arathoth.database.removeExpired()
+        }
+
+        override fun remove(id: Int) {
+            Arathoth.database.remove(id)
+        }
     }
 }

@@ -9,7 +9,9 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityShootBowEvent
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
-import org.bukkit.event.player.*
+import org.bukkit.event.player.PlayerItemBreakEvent
+import org.bukkit.event.player.PlayerItemHeldEvent
+import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.submit

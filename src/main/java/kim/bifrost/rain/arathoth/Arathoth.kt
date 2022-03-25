@@ -11,7 +11,6 @@ import taboolib.common.platform.function.info
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
 import taboolib.platform.BukkitPlugin
-import taboolib.platform.type.BukkitPlayer
 
 @RuntimeDependencies(
     RuntimeDependency(value = "org.jetbrains.kotlin:kotlin-reflect:1.5.10")

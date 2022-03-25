@@ -10,8 +10,6 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.HashMap
 
 /**
  * kim.bifrost.rain.arathoth.internal.EntityStatusManager
@@ -43,7 +41,7 @@ object EntityStatusManager {
     }
 
     internal fun read(player: Player): Map<String, AttributeData> {
-        val status = player.inventory.contents.filter { it.hasItemNode }.readAllAttribute(player)
+        val status = player.inventory.contents.filterNotNull().filter { it.hasItemNode }.readAllAttribute(player)
         val event = ArathothEvents.Read(player, status)
         event.call()
         return event.data

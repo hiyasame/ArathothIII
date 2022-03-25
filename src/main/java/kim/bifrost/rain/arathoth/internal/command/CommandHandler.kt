@@ -11,11 +11,12 @@ import kim.bifrost.rain.arathoth.utils.error
 import kim.bifrost.rain.arathoth.utils.format
 import kim.bifrost.rain.arathoth.utils.info
 import kim.bifrost.rain.arathoth.utils.parseTimeStr
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import taboolib.common.platform.ProxyCommandSender
-import taboolib.common.platform.command.*
+import taboolib.common.platform.command.CommandBody
+import taboolib.common.platform.command.CommandHeader
+import taboolib.common.platform.command.mainCommand
+import taboolib.common.platform.command.subCommand
 import taboolib.common.platform.function.submit
 import taboolib.common5.Coerce
 import taboolib.expansion.createHelper
@@ -24,7 +25,6 @@ import taboolib.module.chat.colored
 import taboolib.platform.type.BukkitCommandSender
 import taboolib.platform.util.isAir
 import java.util.*
-import javax.xml.crypto.Data
 
 /**
  * kim.bifrost.rain.arathoth.internal.command.CommandHandler
@@ -101,17 +101,16 @@ object CommandHandler {
             sender.info("属性节点列表:")
             AttributeKey.registry.forEach {
                 TellrawJson()
-                    .append("&7&l[&f&lArathoth&7&l] &7".colored())
-                    .append("&8${it.name}".colored())
+                    .append("&7&l[&f&lArathoth&7&l]   &8- &f${it.name}".colored())
                     .hoverText(
                         """
                         &8&l${it.name}
-                        
+
                         &7Namespace: &f${it.namespace}
                         &7DataType: &f${it.dataType.javaClass.typeName.removePrefix("kim.bifrost.rain.arathoth.api")}
                         &7Parsers: &f${it.extraParsers.map { p -> p.name }}
                         """.trimIndent().colored()
-                    ).sendTo(BukkitCommandSender(sender))
+                    ).runCommand(it.node).sendTo(BukkitCommandSender(sender))
             }
         }
     }

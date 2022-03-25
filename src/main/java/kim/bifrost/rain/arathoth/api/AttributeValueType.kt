@@ -4,7 +4,6 @@ import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import kim.bifrost.rain.arathoth.utils.takeContent
 import org.bukkit.configuration.ConfigurationSection
-import org.bukkit.inventory.ItemStack
 import org.bukkit.util.NumberConversions
 
 /**

@@ -2,7 +2,6 @@ package kim.bifrost.rain.arathoth.api.handler
 
 import kim.bifrost.rain.arathoth.api.AttributeKey
 import kim.bifrost.rain.arathoth.api.data.AttributeData
-import kim.bifrost.rain.arathoth.api.data.NumberAttributeData
 import kim.bifrost.rain.arathoth.utils.Events
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority

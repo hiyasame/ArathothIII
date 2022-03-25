@@ -5,6 +5,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.5.10"
 }
 
+val libVersion: String = "6.0.7-44"
+
 taboolib {
     install("common")
     install("common-5")
@@ -16,14 +18,21 @@ taboolib {
     install("module-database")
     install("platform-bukkit")
     install("expansion-command-helper")
-    // 编译api
-    options("skip-kotlin-relocate", "skip-env")
+    description {
+        contributors {
+            name("寒雨")
+        }
+        dependencies {
+            name("PlaceholderAPI").optional(true)
+        }
+    }
     classifier = null
-    version = "6.0.7-44"
+    version = libVersion
 }
 
 repositories {
     mavenCentral()
+//    maven { url = uri("https://repo.tabooproject.org/repository/releases") }
 }
 
 dependencies {
@@ -34,6 +43,17 @@ dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
     implementation(kotlin("reflect"))
+
+//    implementation("io.izzel:taboolib:$libVersion:common")
+//    implementation("io.izzel:taboolib:$libVersion:common-5")
+//    implementation("io.izzel:taboolib:$libVersion:module-chat")
+//    implementation("io.izzel:taboolib:$libVersion:module-configuration")
+//    implementation("io.izzel:taboolib:$libVersion:module-kether")
+//    implementation("io.izzel:taboolib:$libVersion:module-nms")
+//    implementation("io.izzel:taboolib:$libVersion:module-nms-util")
+//    implementation("io.izzel:taboolib:$libVersion:module-database")
+//    implementation("io.izzel:taboolib:$libVersion:platform-bukkit")
+//    implementation("io.izzel:taboolib:$libVersion:expansion-command-helper")
 }
 
 tasks.withType<JavaCompile> {

@@ -24,7 +24,7 @@ class AttributeSet(
     companion object {
         // path - set
         val registry = mutableMapOf<String, AttributeSet>()
-        private val setDir = Arathoth.plugin.dataFolder.new("set")
+        private val setDir by lazy { Arathoth.plugin.dataFolder.new("set") }
 
         @Awake(LifeCycle.ENABLE)
         fun load() {

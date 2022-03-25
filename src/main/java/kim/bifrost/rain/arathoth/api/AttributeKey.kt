@@ -8,8 +8,7 @@ import kim.bifrost.rain.arathoth.utils.info
 import kim.bifrost.rain.arathoth.utils.new
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
-import taboolib.common.LifeCycle
-import taboolib.common.platform.Awake
+import taboolib.common.platform.Schedule
 import java.io.File
 
 /**
@@ -118,7 +117,7 @@ class AttributeKey<T: AttributeData>(
             registry.forEach { it.loadConf() }
         }
 
-        @Awake(LifeCycle.ACTIVE)
+        @Schedule(delay = 20)
         fun countRegistered()  {
             info("成功注册属性: &f${registry.size} &7个")
         }

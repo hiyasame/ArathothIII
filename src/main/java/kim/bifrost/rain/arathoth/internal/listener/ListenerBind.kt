@@ -34,7 +34,7 @@ object ListenerBind {
     private val enableInteract: Boolean
         get() = Arathoth.conf.getBoolean("settings.lore.bind.listener.interact", false)
 
-    @Awake(LifeCycle.ENABLE)
+    @Awake(LifeCycle.ACTIVE)
     internal fun init() {
         subscribe<PlayerPickupItemEvent> {
             if (enable && enablePick) {

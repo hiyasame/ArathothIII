@@ -25,7 +25,7 @@ import taboolib.platform.type.BukkitCommandSender
  **/
 object ListenerOthers {
 
-    @Awake(LifeCycle.ENABLE)
+    @Awake(LifeCycle.ACTIVE)
     internal fun init() {
         // 取消弓近战伤害
          subscribe<EntityDamageByEntityEvent>(priority = EventPriority.MONITOR) {

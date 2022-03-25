@@ -5,7 +5,10 @@ import kim.bifrost.rain.arathoth.Arathoth
 import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.internal.database.Correction
 import kim.bifrost.rain.arathoth.internal.database.Database
-import taboolib.module.database.*
+import taboolib.module.database.ColumnOptionSQL
+import taboolib.module.database.ColumnTypeSQL
+import taboolib.module.database.Table
+import taboolib.module.database.getHost
 import javax.sql.DataSource
 
 /**

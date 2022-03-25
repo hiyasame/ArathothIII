@@ -113,6 +113,25 @@ fun String.stripColor(): String {
     return ChatColor.stripColor(this).orEmpty()
 }
 
+private fun loadClassByPath(r: String?, path: String, list: MutableList<Class<*>>, loader: ClassLoader) {
+    val f = File(path)
+    val root = r ?: f.path
+    if (f.isFile
+        && f.name.matches("^.*\\\\.class\$".toRegex())
+        && f.path.contains("base")) {
+        runCatching {
+            val classPath = f.path
+            val className = classPath.substring(root.length + 1, classPath.length - 6).replace(File.pathSeparator, ".")
+            list.add(Class.forName(className, false, loader))
+        }
+    } else {
+        val fs = f.listFiles() ?: return
+        fs.forEach {
+            loadClassByPath(root, it.path, list, loader)
+        }
+    }
+}
+
 val ItemStack.lore: List<String>
     get() {
         val lore = mutableListOf<String>()

@@ -1,13 +1,15 @@
 package kim.bifrost.rain.arathoth.internal.database.impl
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kim.bifrost.rain.arathoth.Arathoth
 import kim.bifrost.rain.arathoth.api.data.AttributeData
 import kim.bifrost.rain.arathoth.internal.database.Correction
 import kim.bifrost.rain.arathoth.internal.database.Database
 import taboolib.common.platform.function.getDataFolder
-import taboolib.module.database.*
+import taboolib.module.database.ColumnOptionSQLite
+import taboolib.module.database.ColumnTypeSQLite
+import taboolib.module.database.Table
+import taboolib.module.database.getHost
 import java.io.File
 import javax.sql.DataSource
 

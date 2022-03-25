@@ -19,17 +19,16 @@ import java.util.function.Supplier
 object RegisterPoster : Injector.Fields {
 
     override val lifeCycle: LifeCycle
-        get() = LifeCycle.ENABLE
+        get() = LifeCycle.ACTIVE
 
     override val priority: Byte
         get() = 0
 
     override fun inject(field: Field, clazz: Class<*>, instance: Supplier<*>) {
-        if (field.isAnnotationPresent(Register::class.java) && field.type == AttributeKey::class.java) {
+        if (field.isAnnotationPresent(Register::class.java)) {
             val obj = instance.get()
             val key = field.get(obj) as AttributeKey<*>
             key.register()
         }
     }
-
 }
