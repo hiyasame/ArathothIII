@@ -9,6 +9,7 @@ import kim.bifrost.rain.arathoth.utils.new
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import taboolib.common.platform.Schedule
+import taboolib.common.platform.function.submit
 import java.io.File
 
 /**
@@ -63,15 +64,18 @@ class AttributeKey<T: AttributeData>(
     /**
      * 注册属性
      */
-    fun register() {
-        if (registered) return
-        loadConf()
-        if (!enable) {
-            return
+    fun register(): AttributeKey<T> {
+        submit {
+            if (registered) return@submit
+            loadConf()
+            if (!enable) {
+                return@submit
+            }
+            handlers.forEach { it.register() }
+            registered = true
+            registry.add(this@AttributeKey)
         }
-        handlers.forEach { it.register() }
-        registered = true
-        registry.add(this)
+        return this
     }
 
     class Builder<T: AttributeData>(val namespace: String, val name: String, private val dataType: AttributeValueType<T>) {
